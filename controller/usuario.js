@@ -1,41 +1,65 @@
-const {response}=require('express');
+const {response, request}=require('express');
+const bcryptjs = require('bcryptjs');
+const Usuario = require('../models/usuario');
 
 
 
-const usuariosGet=(req, res=response)=>{
-    const params = req.query;
+
+const usuariosGet=async(req=request, res=response)=>{
+
+    const {limite = 5, desde=0} = req.query;
+    const query = {estado:true};
+    
+    const [total, usuarios] =await Promise.all([
+        Usuario.countDocuments(query),
+        Usuario.find(query)
+            .skip(Number(desde))
+            .limit(Number(limite))
+    ]);
     res.json({
-        ok: true,
-        msg:'peticion get '
+        total,
+        usuarios
     })
 }
 
-const usuariosPost = (req, res=response)=>{
-    const body = req.body;
-
+const usuariosPost =async(req, res=response)=>{
+   
+    const {nombre, correo, password, rol} = req.body;
+    const usuario = new Usuario({nombre, correo, password, rol});
+    //encriptar
+    const salt = bcryptjs.genSaltSync();
+    usuario.password = bcryptjs.hashSync(password, salt);
+    //guardar en base de datos
+    await usuario.save();
     res.json({
-        ok:true,
-        msg:'peticion post',
-        body
+        usuario
     })
 }
 
-const usuarioPut = (req, res=response)=>{
+const usuarioPut = async(req, res=response)=>{
     const id = req.params.id;
+    const {_id, password, google, ...resto} = req.body;
+
+    //TODO validar contra base de datos
+    if(password){
+        const salt = bcryptjs.genSaltSync();
+        resto.password = bcryptjs.hashSync(password, salt);
+    }
+    const usuario = await Usuario.findByIdAndUpdate(id, resto);
     res.json({
-        ok:true,
-        msg:'peticion put',
-        id
+        usuario
     })
 }
 
-const usuarioDelete  = (req, res=response)=>{
-    const id = req.params.id;
-    res.json({
-        ok:true,
-        msg:'peticion delete',
-        id
-    })
+const usuarioDelete  = async(req, res=response)=>{
+    const {id} = req.params;
+
+    //borrado completo
+    //const usuario = await Usuario.findByIdAndDelete(id);
+    //borrado recomendado cambio de estado
+    const usuario = await Usuario.findByIdAndUpdate(id,{estado:false});
+
+    res.json(usuario);
 }
 
 
