@@ -54,11 +54,12 @@ const usuarioPut = async(req, res=response)=>{
 const usuarioDelete  = async(req, res=response)=>{
     const {id} = req.params;
 
-    //borrado completo
-    //const usuario = await Usuario.findByIdAndDelete(id);
-    //borrado recomendado cambio de estado
+    
+
+    
     const usuario = await Usuario.findByIdAndUpdate(id,{estado:false});
 
+    
     res.json(usuario);
 }
 
