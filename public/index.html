@@ -1,12 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acces Denied</title>
-</head>
-<body>
-    <h1>Acceso denegado</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-signin-client_id" content="885851083780-nh2n52ehr6jvlrl7e4t531cs4p6o3kae.apps.googleusercontent.com">
+     <!--Import Google Icon Font-->
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <title>Google Singin</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>LOGIN</h1>
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="usuario" type="text" class="validate" />
+            <label for="usuario">USUARIO</label>
+          </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+                <input id="contraseña" type="password" class="validate" />
+                <label for="contraseña">Contraseña</label>
+              </div>
+          </div>
+          <div>
+            <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
+                <i class="material-icons right">send</i>
+            </button>
+          </div>
+          <br>
+          <br>
+          <br>
+          <div>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+           
+                <a href="#" onclick="signOut();">Sign out</a>
+
+            
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+
+        var url = (window.location.hostname.includes('localhost'))
+                    ? 'http://localhost:8081/api/auth/google'
+                    : 'https://restserver-api-josue.herokuapp.com/api/auth/google';
+
+
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId());
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); 
+            
+            var id_token = googleUser.getAuthResponse().id_token;
+            const data = {id_token};  
+            
+            
+            fetch(url,{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify(data)
+            })
+            .then(resp=>resp.json())
+            .then(data =>console.log('Nuestro server', data))
+            .catch(console.log);
+        }
+
+          
+        function signOut() {
+          var auth2 = gapi.auth2.getAuthInstance();
+          auth2.signOut().then(function () {
+            console.log('User signed out.');
+          });
+        }
+    </script>
+    
+  </body>
 </html>
