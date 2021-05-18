@@ -62,10 +62,10 @@
 
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId());
+            /*console.log('ID: ' + profile.getId());
             console.log('Name: ' + profile.getName());
             console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); 
+            console.log('Email: ' + profile.getEmail()); */
             
             var id_token = googleUser.getAuthResponse().id_token;
             const data = {id_token};  
@@ -79,6 +79,8 @@
             .then(resp=>resp.json())
             .then(data =>console.log('Nuestro server', data))
             .catch(console.log);
+            console.log('================================');
+            console.log(data);
         }
 
           
