@@ -10,9 +10,15 @@ const googleVerify = async(id_token='')=> {
       idToken:id_token,
       audience: process.env.GOOGLE_CLIENT_ID
   });
-  const payload = ticket.getPayload();
-  
-  return payload;
+  const { name:nombre,
+          picture:img,  
+          email:correo} = ticket.getPayload();
+
+  return {
+    nombre,
+    img,
+    correo
+  };
   
 }
 
