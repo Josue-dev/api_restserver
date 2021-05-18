@@ -77,10 +77,9 @@
                 body:JSON.stringify(data)
             })
             .then(resp=>resp.json())
-            .then(data =>console.log('Nuestro server', data))
+            .then(data =>console.log( data))
             .catch(console.log);
-            console.log('================================');
-            console.log(data);
+           
         }
 
           
