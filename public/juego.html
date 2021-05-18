@@ -10,10 +10,10 @@
 <body>
     <h1>PAGINA PRINCIPAL DONDE QUEREMOS REDIRIJIR</h1>
 
+   
 
-    <div>  <a href="#" onclick="signOut();">Sign out</a></div>
-
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <a href="#" onclick="signOut();">Sign out</a>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
     <script>
         function signOut() {
             var auth2 = gapi.auth2.getAuthInstance();
@@ -22,6 +22,12 @@
                 location.href='index.html';
             });
           }
+          function onLoad() {
+            gapi.load('auth2', function() {
+              gapi.auth2.init();
+            });
+          }
     </script>
+    
 </body>
 </html>
