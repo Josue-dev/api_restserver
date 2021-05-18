@@ -23,7 +23,7 @@
                 <a href="#" onclick="signOut();">Sign out</a>
         </div>
         <div class="col s6">
-          <img src="img/inicio.png" alt="">
+          <img style="width: 150%;" src="img/inicio.png" alt="">
         </div>
     </div>
 
@@ -56,6 +56,12 @@
             .then(resp=>resp.json())
             .then(data =>console.log( data))
             .catch(console.log);
+
+            if(data){
+              location.href='juego.html';
+            }else{
+              location.href='index.html';
+            }
            
         }
 
