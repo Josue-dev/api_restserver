@@ -10,7 +10,8 @@ export function crearCanva(
     canvas.height=height;
     canvas.style.border=border;
     canvas.style.background=backgroundcolor;
-    document.body.appendChild(canvas);
+    document.getElementById("juego").appendChild(canvas);
+    //document.body.appendChild(canvas);
 
     canvas.ctx = canvas.getContext("2d");
 
@@ -53,4 +54,61 @@ export function renderizar(canvas){
         
     }
     ctx.stroke();
+}
+
+export class snakeBody{
+    constructor(){
+        this.x = 20;
+        this.y = 20;
+        this.vx =20;
+        this.vy =0;
+        this.dir=0;
+    }
+
+    render(ctx){
+        ctx.fillStyle="gray";
+        ctx.fillRect(this.x,this.y,20,20);
+    
+    }
+
+    mover(){
+        switch(this.dir){
+            case 0:
+                this.vx = -20;
+                this.vy = 0;
+                break;
+            case 1:
+                this.vy = -20;
+                this.vx = 0;
+    
+                break;
+            case 2:
+                this.vx=20;
+                this.vy=0;
+                break;
+            case 3:
+                this.vy=20;
+                this.vx=0;
+                break;
+        };
+        this.x +=this.vx;
+        this.y +=this.vy;
+
+    }
+}
+
+export class snakeFood{
+    constructor(){
+        this.x = Math.floor(Math.random()*20)*20;
+        this.y = Math.floor(Math.random()*20)*20;
+    }
+
+    render(ctx){
+        ctx.fillStyle="red";
+        ctx.fillRect(this.x, this.y,20,20);
+    }
+    relocate(){
+        this.x = Math.floor(Math.random()*20)*20;
+        this.y = Math.floor(Math.random()*20)*20;
+    }
 }
