@@ -2,13 +2,18 @@
 
 import {crearCanva, renderizar} from "./graficos.js";
 
-let x = 20;
-let y = 20;
-let bx =20;
-let by =0;
 
 let canvas = crearCanva();
 let ctx = canvas.ctx;
+let x = 20;
+let y = 20;
+let vx =20;
+let vy =0;
+
+let fps = 15,
+    start = 0,
+    frameDuration = 3000/fps;
+
 
 
 
@@ -20,29 +25,39 @@ ctx.fillRect(40,40,20,20);
 
 loop();
 
-function loop(){
+function loop(timestamp){
     requestAnimationFrame(loop);
-    renderizar(canvas);
-    ctx.fillStyle="gray";
-    ctx.fillRect(x,y,20,20);bx;
-
-    x +=bx;
+    if(timestamp>=start){
+        renderizar(canvas);
+        ctx.fillStyle="gray";
+        ctx.fillRect(x,y,20,20);
+    
+        x +=vx;
+        y +=vy;
+        start=timestamp +frameDuration;
+    }
+  
 }
 
 window.addEventListener("keydown", keyHandler, false);
 function keyHandler (event){
     switch(event.keyCode){
         case 37:
-            console.log("izquierda");
+            vx = -20;
+            vy = 0;
             break;
         case 38:
-            console.log("arriba");
+            vy = -20;
+            vx = 0;
+
             break;
         case 39:
-            console.log("derecha");
+            vx=20;
+            vy=0;
             break;
         case 40:
-            console.log("abajo");
+            vy=20;
+            vx=0;
             break;
     }
     

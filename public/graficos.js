@@ -20,6 +20,7 @@ export function crearCanva(
 export function renderizar(canvas){
     let ctx = canvas.ctx;
 
+    ctx.clearRect(0,0,canvas.width, canvas.height);
     ctx.lineWidth = 1;
     ctx.strokstyle = "blue";
 
