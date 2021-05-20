@@ -1,6 +1,6 @@
 
 import {crearCanva, snakeFood, renderizar, snakeBody} from "./graficos.js";
-
+import { Queue} from "./estructuras/Queue.js";
 
 
 
@@ -16,7 +16,7 @@ let snake= [];
 snake[0]= new  snakeBody();//cabeza
 let comida = new snakeFood();
 snake[0].dir=2;
-
+let f = new Queue();
 
 loop();
 
@@ -48,10 +48,11 @@ function actualizar (){
     }else if(snake[0].y < 0){
         snake[0].y = canvas.height - 20;
     }
-
+   
+    
     
     if(colision()){
-       
+       f.enqueue(snake.length);
         snake=[];
     
         snake[0] = new snakeBody();
@@ -60,14 +61,15 @@ function actualizar (){
 
         let h1 = document.createElement("h3");
         h1.style.backgroundColor="orange";
-        h1.innerHTML='Haz perdido';
+        h1.innerHTML='Haz perdido Puntaje total:'+f.imprimir();
         h1.style.textAlign="center";
         h1.style.borderRadius="2em";
 
         if(snake.length!=0){
             console.log(snake.length);
             document.getElementById("fin").appendChild(h1);
-            console.log('juego terminado');
+            f.imprimir();
+            console.log('juego terminado'+f.imprimir());
         }
         
     }
@@ -76,8 +78,10 @@ function actualizar (){
         comida.relocate();
         snake[snake.length] = new snakeBody();
         snake_ubicacion();
+       
     }
 
+    
 }
 //conteo de comida
 function snake_ubicacion(){
