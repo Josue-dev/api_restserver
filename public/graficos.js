@@ -91,10 +91,14 @@ export class snakeBody{
                 this.vx=0;
                 break;
         };
+
+        
         this.x +=this.vx;
         this.y +=this.vy;
 
     }
+
+  
 }
 
 export class snakeFood{
