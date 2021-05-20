@@ -1,7 +1,10 @@
 
 import {crearCanva, snakeFood, renderizar, snakeBody} from "./graficos.js";
 import { Queue} from "./estructuras/Queue.js";
-
+//descomentar para utilizar Stack o demas estructuras y iniciarlizarlas con (new)
+//import {Stack} from "./estructuras/Stack.js";
+//import {listaEnlazada} from "./estructuras/ListaEnlazadaSimple.js";
+//import {ListaDoubleEnlazada} from "./estructuras/ListaDoubleEnlazada.js";
 
 
 
