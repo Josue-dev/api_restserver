@@ -2,7 +2,7 @@
 export function crearCanva(
     width = 400, height = 400,
     border="1px dashed black",
-    backgroundcolor="white"
+    backgroundcolor="#e0e0e0"
 ){
     //crear canva 
     let canvas = document.createElement("canvas");

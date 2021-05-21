@@ -63,10 +63,10 @@ function actualizar (){
         let final = false;
 
         let h1 = document.createElement("h3");
-        h1.style.backgroundColor="orange";
-        h1.innerHTML='Haz perdido Puntaje total:'+f.imprimir();
-        h1.style.textAlign="center";
-        h1.style.borderRadius="2em";
+        //h1.style.backgroundColor="orange";
+        h1.innerHTML='Has perdido Puntaje total:'+f.imprimir();
+        //h1.style.textAlign="center";
+        //h1.style.borderRadius="2em";
 
         if(snake.length!=0){
             console.log(snake.length);
